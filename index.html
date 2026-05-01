@@ -1,5 +1,223 @@
 <!DOCTYPE html>
-<html>
-<head><meta http-equiv="refresh" content="0; url=https://blueraun.github.io/ai-edu-web/" /></head>
-<body><a href="https://blueraun.github.io/ai-edu-web/">AI 여정으로 이동</a></body>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>blueraun | AI × 기업 전략</title>
+  <meta name="description" content="기업 전략 실무자를 위한 AI 활용 콘텐츠 — 프롬프트 엔지니어링, AX 전략, ESG"/>
+  <meta property="og:title" content="blueraun | AI × 기업 전략"/>
+  <meta property="og:description" content="기업 전략 실무자를 위한 AI 활용 콘텐츠"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://blueraun.github.io"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@700;900&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --gold: #D97706; --gold-l: #F59E0B;
+      --bg: #F7F8FC; --card: #FFFFFF;
+      --text: #1A1D2E; --muted: #525B7A; --faint: #9BA3BF;
+      --border: rgba(0,0,0,0.08);
+    }
+    body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(247,248,252,0.92); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border); height: 58px;
+      display: flex; align-items: center; justify-content: space-between; padding: 0 24px;
+    }
+    .nav-logo { font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 1.1rem; color: var(--gold); }
+    .nav-link { color: var(--muted); font-size: 13px; font-weight: 600; text-decoration: none; padding: 6px 12px; border-radius: 8px; transition: all .2s; }
+    .nav-link:hover { background: rgba(217,119,6,0.08); color: var(--gold); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 90px 24px 60px;
+      background: radial-gradient(ellipse 80% 55% at 50% -5%, rgba(217,119,6,0.08) 0%, transparent 65%),
+                  linear-gradient(180deg, #FFFBF0 0%, #F7F8FC 60%);
+      position: relative; text-align: center;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(0,0,0,0.025) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(0,0,0,0.025) 1px, transparent 1px);
+      background-size: 60px 60px; pointer-events: none;
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(217,119,6,0.1); border: 1px solid rgba(217,119,6,0.22);
+      border-radius: 100px; padding: 7px 18px; margin-bottom: 26px; position: relative;
+      font-size: 12px; color: var(--gold); font-weight: 700; letter-spacing: .08em;
+    }
+    h1 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-weight: 900; line-height: 1.12; margin-bottom: 18px; position: relative;
+    }
+    .grad { background: linear-gradient(90deg,#D97706,#F59E0B,#92400E); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-desc { color: var(--muted); font-size: 1.02rem; line-height: 1.85; margin-bottom: 36px; position: relative; }
+    .btn-group { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; position: relative; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold-l)); border: none;
+      border-radius: 12px; padding: 13px 30px; color: #fff; font-weight: 900;
+      font-size: .97rem; cursor: pointer; text-decoration: none; font-family: inherit;
+      box-shadow: 0 8px 24px rgba(217,119,6,.3); transition: transform .15s, box-shadow .15s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(217,119,6,.4); }
+    .btn-secondary {
+      background: rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.13);
+      border-radius: 12px; padding: 13px 30px; color: var(--text); font-weight: 700;
+      font-size: .97rem; cursor: pointer; text-decoration: none; font-family: inherit;
+      transition: background .15s;
+    }
+    .btn-secondary:hover { background: rgba(0,0,0,0.1); }
+
+    /* PROJECTS */
+    .section { padding: 80px 24px; max-width: 860px; margin: 0 auto; }
+    .section-label { color: var(--gold); font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 10px; }
+    .section-title { font-family: 'Noto Serif KR', serif; font-size: clamp(1.6rem,3.5vw,2.2rem); font-weight: 900; margin-bottom: 10px; }
+    .section-sub { color: var(--muted); margin-bottom: 40px; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+      padding: 24px 22px; text-decoration: none; color: inherit;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.09); border-color: rgba(217,119,6,0.25); }
+    .card-icon { font-size: 32px; margin-bottom: 4px; }
+    .card-tag { display: inline-block; font-size: 10px; font-weight: 700; border-radius: 20px; padding: 3px 10px; margin-bottom: 2px; }
+    .card-title { font-weight: 800; font-size: 1.05rem; line-height: 1.3; }
+    .card-desc { color: var(--muted); font-size: 13px; line-height: 1.7; }
+    .card-arrow { margin-top: auto; color: var(--gold); font-weight: 700; font-size: 13px; }
+
+    /* ABOUT */
+    .about-wrap {
+      background: linear-gradient(135deg,#FFFBF0,#FEF3C7);
+      border: 1px solid rgba(217,119,6,0.18); border-radius: 20px;
+      padding: 36px 32px; display: flex; gap: 24px; align-items: flex-start;
+    }
+    .about-avatar {
+      width: 60px; height: 60px; border-radius: 50%;
+      background: linear-gradient(135deg,var(--gold),var(--gold-l));
+      display: flex; align-items: center; justify-content: center;
+      font-family:'Noto Serif KR',serif; font-weight:900; font-size:1.4rem; color:#fff; flex-shrink:0;
+    }
+    .about-name { font-weight: 800; font-size: 1.05rem; margin-bottom: 4px; }
+    .about-role { color: var(--gold); font-size: 12px; font-weight: 700; margin-bottom: 12px; }
+    .about-text { color: var(--muted); font-size: 13px; line-height: 1.85; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+    .tag { background: rgba(217,119,6,0.1); color: var(--gold); font-size: 11px; font-weight: 700; border-radius: 20px; padding: 4px 11px; }
+
+    /* FOOTER */
+    footer { border-top: 1px solid var(--border); padding: 28px 24px; text-align: center; color: var(--faint); font-size: 12px; }
+    footer a { color: var(--gold); text-decoration: none; font-weight: 600; }
+
+    @media (max-width: 600px) {
+      .about-wrap { flex-direction: column; padding: 24px 20px; }
+      nav { padding: 0 16px; }
+      .nav-link:not(:last-child) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">blueraun</span>
+  <div>
+    <a href="#projects" class="nav-link">프로젝트</a>
+    <a href="#about" class="nav-link">소개</a>
+    <a href="https://blueraun.github.io/ai-edu-web/" class="nav-link" target="_blank">AI 여정 →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">✦ AI × 기업 전략</div>
+  <h1>
+    기업 실무자를 위한<br/>
+    <span class="grad">AI 활용 콘텐츠</span>
+  </h1>
+  <p class="hero-desc">
+    프롬프트 엔지니어링 · AX 전략 · ESG · 기업지배구조<br/>
+    현장에서 바로 쓰는 실전 AI 인사이트
+  </p>
+  <div class="btn-group">
+    <a href="https://blueraun.github.io/ai-edu-web/" class="btn-primary">🚀 AI 여정 시작하기</a>
+    <a href="#projects" class="btn-secondary">프로젝트 보기</a>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section" id="projects">
+  <p class="section-label">Projects</p>
+  <h2 class="section-title">진행 중인 프로젝트</h2>
+  <p class="section-sub">기업 실무에 바로 적용할 수 있는 AI 콘텐츠를 만들고 있습니다</p>
+  <div class="cards">
+
+    <a href="https://blueraun.github.io/ai-edu-web/" class="card" target="_blank">
+      <div class="card-icon">🗺️</div>
+      <span class="card-tag" style="background:rgba(217,119,6,0.1);color:#D97706;">LIVE · 진행중</span>
+      <div class="card-title">김실장의 AI 여정</div>
+      <div class="card-desc">0%에서 100%까지 — 기업 실무자를 위한 프롬프트 엔지니어링 마스터클래스. 20개 모듈 · 5단계 레벨 · AI 코치 내장</div>
+      <div class="card-arrow">바로 가기 →</div>
+    </a>
+
+    <div class="card" style="opacity:.65; pointer-events:none;">
+      <div class="card-icon">🤖</div>
+      <span class="card-tag" style="background:rgba(100,116,139,0.1);color:#64748B;">준비중</span>
+      <div class="card-title">AX 전략 가이드</div>
+      <div class="card-desc">중견·대기업 전략기획팀을 위한 AI 전환(AX) 로드맵 및 실행 플레이북</div>
+      <div class="card-arrow" style="color:var(--faint)">Coming Soon</div>
+    </div>
+
+    <div class="card" style="opacity:.65; pointer-events:none;">
+      <div class="card-icon">📊</div>
+      <span class="card-tag" style="background:rgba(100,116,139,0.1);color:#64748B;">준비중</span>
+      <div class="card-title">ESG × AI 인사이트</div>
+      <div class="card-desc">ISSB·SCOPE3 ESG 공시 대응을 AI로 효율화하는 실전 가이드</div>
+      <div class="card-arrow" style="color:var(--faint)">Coming Soon</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about" style="padding-top:0">
+  <p class="section-label">About</p>
+  <h2 class="section-title">소개</h2>
+  <p class="section-sub">기업 현장 경험을 AI와 연결합니다</p>
+  <div class="about-wrap">
+    <div class="about-avatar">김</div>
+    <div>
+      <div class="about-name">blueraun</div>
+      <div class="about-role">기업 전략 × AI 콘텐츠 크리에이터</div>
+      <p class="about-text">
+        대기업 전략기획실 경험을 바탕으로 AI를 실무에 접목하는 방법을 연구하고 공유합니다.<br/>
+        프롬프트 엔지니어링, AX CFO·CSO 전략, ESG, 기업지배구조 분야에서
+        현장에서 바로 쓸 수 있는 콘텐츠를 만들고 있습니다.
+      </p>
+      <div class="tags">
+        <span class="tag">AX 전략</span>
+        <span class="tag">프롬프트 엔지니어링</span>
+        <span class="tag">ESG</span>
+        <span class="tag">기업지배구조</span>
+        <span class="tag">AX CFO</span>
+        <span class="tag">AX CSO</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 blueraun &nbsp;·&nbsp; <a href="https://blueraun.github.io/ai-edu-web/">김실장의 AI 여정</a> &nbsp;·&nbsp; <a href="https://github.com/blueraun" target="_blank">GitHub</a></p>
+</footer>
+
+</body>
 </html>
